@@ -109,6 +109,10 @@ void QDIMACSParser::printQDIMACSPrefix(std::ostream& out) {
 }
 
 void QDIMACSParser::addToClauseList(int alias, const GatePolarity polarity, vector<vector<int>>& clause_list) {
+  if (polarity == GatePolarity::Negative) {
+    QBFParser::addToClauseList(alias, polarity, clause_list);
+    return;
+  }
   auto& gate = gates[alias];
   // Do not introduce auxiliary variables/clauses for input clauses and the output gate.
   if (gate.gate_type == GateType::Or) {
